@@ -1,5 +1,5 @@
-<<<<<<< HEAD
- Ticket Booking App (V2)-  BookEase 
+
+## Ticket Booking App (V2)-  BookEase 
 
 A web-based application for booking event tickets, creating shows, theatres and getting infos.
 
