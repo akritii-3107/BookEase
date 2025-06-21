@@ -1,3 +1,4 @@
+<<<<<<< HEAD
  Ticket Booking App (V2)-  BookEase 
 
 A web-based application for booking event tickets, creating shows, theatres and getting infos.
@@ -153,3 +154,6 @@ celery -A app.client beat -l info
 
 
 
+=======
+# BookEase
+>>>>>>> 3e5e0f1015e5836fef2cfa84f3f1fbffad782b4c
