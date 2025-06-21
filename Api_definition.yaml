@@ -1,0 +1,578 @@
+info:
+  title: Ticket Booking App - Bookease
+  version: 2.0
+  description: API documentation for my Application
+
+apis:
+
+#Basic APIs for Login, Signup and Logout 
+  - name: Signup
+    description: API for user registration
+    endpoints:
+      - path: /api/register
+        method: POST
+        description: Register a new user
+        parameters:
+          - name: username
+            type: string
+            description: User's username
+          - name: password
+            type: string
+            description: User's password
+          - name: email
+            type: string
+            description: User's email address
+
+  - name: Login
+    description: API for user login
+    endpoints:
+      - path: /api/login
+        method: POST
+        description: Log in an existing user
+        parameters:
+          - name: username
+            type: string
+            description: User's username
+          - name: password
+            type: string
+            description: User's password
+
+  - name: Get User Role
+    description: API to get the role of the user
+    endpoints:
+      - path: /api/user/role
+        method: GET
+        description: Get the role of the authenticated user
+        parameters: []
+
+  - name: Get User Profile
+    description: API to get the user's profile details
+    endpoints:
+      - path: /api/user/profile
+        method: GET
+        description: Get the profile details of the authenticated user
+        parameters: []
+
+  - name: Logout
+    description: API to log out the user
+    endpoints:
+      - path: /api/logout
+        method: GET
+        description: Log out the user
+        parameters: []
+
+  - name: Change Report Format
+    description: API to change the format of user's monthly report
+    endpoints:
+      - path: /api/user/reportformat
+        method: POST
+        description: Change the monthly report format for the authenticated user
+        parameters:
+          - name: format
+            type: string
+            description: New report format
+
+# Theatre Management APIs 
+
+- name: Get Theatre by ID
+    description: API to get theatre details by ID
+    endpoints:
+      - path: /api/theater/<int:theater_id>
+        method: GET
+        description: Get details of a theatre by its ID
+        parameters:
+          - name: theater_id
+            type: integer
+            description: ID of the theatre
+        responses:
+          - status: 201
+            description: Theatre details retrieved successfully
+
+  - name: Get All Theatres
+    description: API to get a list of all theatres
+    endpoints:
+      - path: /api/theaters
+        method: GET
+        description: Get a list of all theatres
+        parameters: []
+        responses:
+          - status: 200
+            description: List of all theatres retrieved successfully
+
+ - name: Get Theatres with Shows
+    description: API to get theatres with their shows
+    endpoints:
+      - path: /api/theaters/shows
+        method: GET
+        description: Get a list of theatres along with their shows
+        responses:
+          - status: 200
+            description: List of theatres with shows retrieved successfully
+          - status: 500
+            description: An error occurred while fetching theatres and shows
+  
+  - name: Create Theatre
+    description: API to create a new theatre
+    endpoints:
+      - path: /api/theaters/create
+        method: POST
+        description: Create a new theatre
+        parameters: []
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: Name of the theatre
+                  caption:
+                    type: string
+                    description: Caption for the theatre
+                  image:
+                    type: file
+                    description: Image file for the theatre (optional)
+                  capacity:
+                    type: integer
+                    description: Seating capacity of the theatre
+                  city:
+                    type: string
+                    description: City of the theatre
+                  latitude:
+                    type: number
+                    description: Latitude coordinate of the theatre location
+                  longitude:
+                    type: number
+                    description: Longitude coordinate of the theatre location
+                  address:
+                    type: string
+                    description: Address of the theatre location
+        responses:
+          - status: 201
+            description: Theatre created successfully
+          - status: 409
+            description: Theatre already exists
+          - status: 401
+            description: Error creating theatre
+            example:
+              message: Some Error Occurred while creating theater
+    
+  - name: Edit Theatre
+    description: API to edit an existing theatre
+    endpoints:
+      - path: /api/theaters/edit/<int:theater_id>
+        method: POST
+        description: Edit an existing theatre
+        parameters:
+          - name: theater_id
+            type: integer
+            description: ID of the theatre to be edited
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: New name of the theatre
+                  caption:
+                    type: string
+                    description: New caption for the theatre
+                  image:
+                    type: file
+                    description: New image file for the theatre (optional)
+                  capacity:
+                    type: integer
+                    description: New seating capacity of the theatre
+        responses:
+          - status: 201
+            description: Theatre edited successfully
+            example:
+              message: Successfully Edited the Theater
+          - status: 401
+            description: Error editing theatre
+            example:
+              message: Some Error Occurred
+          - status: 404
+            description: Theater not found
+            example:
+              message: Theater Does not exist
+
+
+  - name: Delete Theatre
+    description: API to delete an existing theatre
+    endpoints:
+      - path: /api/theaters/delete/<int:theater_id>
+        method: POST
+        description: Delete an existing theatre by its ID
+        parameters:
+          - name: theater_id
+            type: integer
+            description: ID of the theatre to be deleted
+        responses:
+          - status: 201
+            description: Theatre deleted successfully
+            example:
+              message: Successfully Deleted the Theater
+          - status: 401
+            description: Error deleting theatre
+            example:
+              message: Some Error Occurred
+
+  - name: Get Cities with Theatres
+    description: API to get the list of cities with theatres
+    endpoints:
+      - path: /api/theaters/cities/
+        method: GET
+        description: Get a list of cities with theatres
+        responses:
+          - status: 202
+            description: List of cities with theatres retrieved successfully
+            example:
+              - Example City A
+              - Example City B
+              - Example City C
+
+# Admin Dashboard APIs for Export  
+
+  - name: Export CSV Report
+    description: API to export a CSV report about a theatre
+    endpoints:
+      - path: /api/export_csv/<int:theater_id>
+        method: POST
+        description: Export a CSV report about a theatre
+        parameters:
+          - name: theater_id
+            type: integer
+            description: ID of the theatre to export the CSV report for
+        responses:
+          - status: 200
+            description: CSV report is being created
+            example:
+              success: true
+              message: CSV report is getting created
+              id: task_id
+
+  - name: Get Progress of CSV Export Task
+    description: API to get the progress of a CSV export task
+    endpoints:
+      - path: /api/get_progress/<task_id>
+        method: GET
+        description: Get the progress of a CSV export task by its ID
+        parameters:
+          - name: task_id
+            type: string
+            description: ID of the CSV export task
+        responses:
+          - status: 200
+            description: Progress of CSV export task retrieved successfully
+            example:
+              status: SUCCESS
+              csv_filename: example_report.csv
+              message: TASK COMPLETED, YOU CAN DOWNLOAD FILE NOW.
+
+  - name: Download Detailed CSV Report
+    description: API to download the detailed CSV report for a theatre
+    endpoints:
+      - path: /api/get_report_download/<filename>
+        method: GET
+        description: Download the detailed CSV report for a theatre by its filename
+        parameters:
+          - name: filename
+            type: string
+            description: Filename of the CSV report to download
+        responses:
+          - status: 201
+            description: Detailed CSV report downloaded successfully
+            example:
+              The CSV file will be downloaded
+
+# Show management APIs
+
+  - name: Get Shows with Details and Sorted by Rating
+    description: API to get shows with their details and sorted by rating
+    endpoints:
+      - path: /api/shows
+        method: GET
+        description: Get shows with their details sorted by rating
+        responses:
+          - status: 201
+            description: Shows with details sorted by rating retrieved 
+            
+  - name: Get Show Details by Show ID
+    description: API to get details of a show by the show ID
+    endpoints:
+      - path: /api/show/<int:show_id>
+        method: GET
+        description: Get details of a show by its ID
+        parameters:
+          - name: show_id
+            type: integer
+            description: ID of the show
+        responses:
+          - status: 201
+            description: Show details retrieved successfully
+
+
+  - name: Add Show to Theatre with Show Details
+    description: API to add a show to a theatre with show details
+    endpoints:
+      - path: /api/shows/create/<int:theater_id>
+        method: POST
+        description: Add a show to a theatre
+        parameters:
+          - name: theater_id
+            type: integer
+            description: ID of the theatre
+        requestBody:
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: Name of the show
+                  description:
+                    type: string
+                    description: Description of the show
+                  rating:
+                    type: string
+                    description: Rating of the show
+                  tags:
+                    type: string
+                    description: Tags for the show
+                  ticket_price:
+                    type: string
+                    description: Ticket price for the show
+                  image:
+                    type: file
+                    description: Image file for the show
+                  genre:
+                    type: string
+                    description: Genre of the show
+                  interval:
+                    type: string
+                    description: Interval of the show
+                  Date_s:
+                    type: string
+                    description: Start date of the show (YYYY-MM-DD)
+                  time:
+                    type: string
+                    description: Start time of the show (HH:MM)
+        responses:
+          - status: 201
+            description: Show added to theatre successfully
+            example:
+              message: Successfully Created show
+
+
+  - name: Add Show to Multiple Theatres with Different Prices
+    description: API to add a show to multiple theatres at the same time and assign different prices to each
+    endpoints:
+      - path: /api/shows/create
+        method: POST
+        description: Add a show to multiple theatres
+        requestBody:
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: Name of the show
+                  description:
+                    type: string
+                    description: Description of the show
+                  rating:
+                    type: string
+                    description: Rating of the show
+                  tags:
+                    type: string
+                    description: Tags for the show
+                  image:
+                    type: file
+                    description: Image file for the show
+                  theaters:
+                    type: array
+                    description: List of theater IDs
+                    items:
+                      type: integer
+                  interval:
+                    type: string
+                    description: Interval of the show
+                  Date_s:
+                    type: string
+                    description: Start date of the show (YYYY-MM-DD)
+                  genre:
+                    type: string
+                    description: Genre of the show
+                  ticketPricelist:
+                    type: object
+                    description: Dictionary containing theater IDs as keys and ticket prices as values
+                    example:
+                      '1': '10.00'
+                      '2': '15.00'
+                  time:
+                    type: string
+                    description: Start time of the show (HH:MM)
+        responses:
+          - status: 201
+            description: Show added to multiple theatres successfully
+            example:
+              message: Successfully Created show
+  
+
+  - name: Edit Show
+    description: API to edit the created show's image and description
+    endpoints:
+      - path: /api/shows/edit/<int:show_id>
+        method: POST
+        description: Edit a show's image and description
+        parameters:
+          - name: show_id
+            type: integer
+            description: ID of the show to be edited
+        requestBody:
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: New name of the show
+                  description:
+                    type: string
+                    description: New description of the show
+                  image:
+                    type: file
+                    description: New image file for the show
+        responses:
+          - status: 201
+            description: Show edited successfully
+            example:
+              message: Successfully edited show
+
+  - name: Delete Show
+    description: API to delete an already existing show
+    endpoints:
+      - path: /api/shows/delete/<int:show_id>
+        method: POST
+        description: Delete a show by its ID
+        parameters:
+          - name: show_id
+            type: integer
+            description: ID of the show to be deleted
+        responses:
+          - status: 201
+            description: Show deleted successfully
+            example:
+              message: Show deleted successfully
+
+
+# Booking APIs to create bookings 
+
+  - name: Book Tickets
+    description: API to book tickets for a show
+    endpoints:
+      - path: /api/user/book/<int:show_id>
+        method: POST
+        description: Book tickets for a show by its ID
+        parameters:
+          - name: show_id
+            type: integer
+            description: ID of the show to book tickets for
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  number:
+                    type: integer
+                    description: Number of tickets to be booked
+        responses:
+          - status: 201
+            description: Tickets booked successfully
+            example:
+              message: Successfully Booked Tickets, Your Tickets will be mailed to you
+          - status: 404
+            description: User not found
+            example:
+              message: Cannot Book Tickets , user Not present
+
+
+  - name: Get User Bookings
+    description: API to get bookings made by a user
+    endpoints:
+      - path: /api/user/bookings
+        method: GET
+        description: Get bookings made by the user
+        responses:
+          - status: 200
+            description: Bookings retrieved successfully
+            content:
+              application/json:
+                example:
+                  - show_id: 1
+                    show_name: Example Show
+                    theater_name: Example Theater
+                    num_tickets: 2
+                    image_path: /path/to/image.jpg
+                    city: Example City
+                    booking_date: 01/08/2023
+                  - show_id: 2
+                    show_name: Another Show
+                    theater_name: Another Theater
+                    num_tickets: 1
+                    image_path: /path/to/another/image.jpg
+                    city: Another City
+                    booking_date: 05/08/2023
+          - status: 203
+            description: No bookings yet
+            example:
+              message: no Bookings Yet
+          - status: 404
+            description: User not found
+            example:
+              message: User does not exist
+
+
+  - name: Rate Booked Show
+    description: API to rate and review a show booked by a user
+    endpoints:
+      - path: /api/user/rate/<int:show_id>
+        method: POST
+        description: Rate and review a show booked by the user
+        parameters:
+          - name: show_id
+            in: path
+            type: integer
+            required: true
+            description: ID of the show to be rated and reviewed
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  rating:
+                    type: number
+                    description: Numeric rating for the show (1-5)
+                  comment:
+                    type: string
+                    description: User's comment or review about the show
+        responses:
+          - status: 201
+            description: Review posted successfully
+          - status: 401
+            description: Cannot post review
+          - status: 402
+            description: User not found
+          - status: 405
+            description: Already reviewed

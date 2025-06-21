@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Wellcome To BookEase.</title>
+  <style>
+    body, p, h1, h2, h3 {
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      background-color: #053544;
+    }
+    
+    .container {
+      width: 100%;
+      box-sizing: border-box;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #053544;
+    }
+    
+    /* Style headings and paragraphs */
+    h1, h2 {
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    
+    p {
+      color: #ffffff;
+      margin-bottom: 20px;
+    }
+    
+    /* Style buttons */
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Hey, {{ username }}! You are missing TOP Shows at Bookease</h1>
+    <p>Book - Watch - Enjoy - Repeat </p>
+    <ul>
+        {% for show in upcoming_shows %}
+        <li>{{ show }}</li>
+      {% endfor %}
+        
+    </ul>
+
+
+  </div>
+</body>
+</html>

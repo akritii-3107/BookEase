@@ -1,0 +1,48 @@
+# --- Python backend ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.rdb
+celerybeat-schedule.*
+*.log
+*.sqlite3
+config.py         
+secrets.json
+credentials.json
+
+.vscode/
+.idea/
+*.code-workspace
+gitignore
+Copy
+Edit
+*.egg-info/
+*.pkl
+
+# Virtual environments
+.env
+.venv/
+env/
+venv/
+__pycache__/
+*.py[cod]
+.coverage
+.pytest_cache/
+
+# --- Node/Vue frontend ---
+node_modules/
+dist/
+.cache/
+*.log
+*.local
+
+# --- System files ---
+.DS_Store
+Thumbs.db
+*.swp
+
+# --- VSCode/IDE ---
+.vscode/
+.idea/
+*.code-workspace

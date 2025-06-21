@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Brand Colors */
+    :root {
+      --brand-primary: #053544;
+      --brand-secondary: #0e9a99;
+      --brand-light: #caeded;
+      --white: #ffffff;
+    }
+    
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color:#053544 ;
+    }
+    
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #caeded;;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    h1, h2, p {
+      color: #053544;
+    }
+    
+    a {
+      color: #0e9a99;
+      text-decoration: none;
+    }
+    
+    /* Header Section */
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .header img{
+      width: 100px;
+      height: 100px;
+      display: block;
+      margin: 10px auto;
+
+    }
+    
+    /* Show Section */
+    .show {
+      margin-bottom: 20px;
+    }
+    
+    /* Ratings Section */
+    .ratings {
+      margin-bottom: 20px;
+    }
+    
+    /* Upcoming Shows Section */
+    .upcoming-shows {
+      margin-bottom: 20px;
+    }
+    .show-image {
+      width: 100px; /* Adjust the width as needed */
+      height: 100px;
+      display: block;
+      margin: 10px auto;
+    }
+  </style>
+</head>
+<body>
+    <div class="container">
+      <!-- Header Section -->
+      <div class="header">
+        <h1>Welcome to Bookease</h1>
+        <p>Hello {{ username }}, here's your Entertainment Report for {{ month }}.</p>
+        <img src="./bookease-logo.png" alt="Bookease Logo">
+      </div>
+      
+      <!-- Show Section -->
+      <div class="show">
+        <h2>Shows Booked by You</h2>
+        <ul>
+          {% for show in booked_shows %}
+            <li>
+              <h3>{{ show.name }}</h3>
+              <img src="{{ show.image }}" alt="{{ show.name }}" class="show-image">
+              <p>{{ show.description }}</p>
+              <p>Date: {{ show.date }} | Time: {{ show.time }}</p>
+              <p>Number of Tickets: {{ show.num_tickets }}</p>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+      
+      <!-- Ratings Section -->
+      <div class="ratings">
+        <h2>Your Ratings and Comments</h2>
+        {% if user_reviews %}
+          <ul>
+            {% for review in user_reviews %}
+              <li>
+                <h3>Rating: {{ review.rating }}</h3>
+                <p>{{ review.comment }}</p>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p>No ratings or comments yet.</p>
+        {% endif %}
+      </div>
+      
+      <!-- Upcoming Shows Section -->
+      <div class="upcoming-shows">
+        <h2>Upcoming Shows in Next Month</h2>
+        <ul>
+          {% for upcoming_show in upcoming_shows %}
+            <li>
+              <h3>{{ upcoming_show.name }}</h3>
+              <img src="{{ upcoming_show.image }}" alt="{{ upcoming_show.name }}" class="show-image">
+              <p>{{ upcoming_show.description }}</p>
+              <p>Date: {{ upcoming_show.date }} | Time: {{ upcoming_show.time }}</p>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
