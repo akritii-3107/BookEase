@@ -1,3 +1,20 @@
+# 🎟️ BookEase
+
+**BookEase** is a full-stack ticket booking web application for events, shows, and theater experiences. It provides a seamless platform for users to discover events and book tickets, while offering admins intuitive dashboards to manage theaters, shows, and analytics.
+
+## 🌟 Features
+
+### 🎫 User Features
+- Browse live and upcoming shows
+- Book tickets for movies, plays, concerts, and more
+- Email notifications for bookings and updates
+- User profile and booking history
+
+### 🛠️ Admin Features
+- Login & manage theaters and shows
+- Visual dashboards with charts and reports
+- Daily and monthly email summaries
+- Add/edit/delete events and theaters
 
 ## Ticket Booking App (V2)-  BookEase 
 
